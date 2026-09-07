@@ -1,0 +1,23 @@
+[Unit]
+Description=Dharke Clothing Matcher Ultra-Low Resource API
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/clothing-matcher
+ExecStart=/opt/clothing-matcher/rust_matcher 8000
+Restart=always
+RestartSec=3
+Environment=PORT=8000
+StandardOutput=journal
+StandardError=journal
+LimitNOFILE=65536
+
+# Strict memory safety limits for low-end servers (standing RAM is ~15 MB)
+MemoryMax=64M
+MemoryHigh=48M
+
+[Install]
+WantedBy=multi-user.target
